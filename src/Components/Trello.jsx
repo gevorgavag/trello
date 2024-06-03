@@ -11,10 +11,9 @@ const Trello = () => {
     const dispatch = useDispatch();
 
     const trello = useSelector((state) => state.todos)
-    const [currentCard, setCurrentCard] = useState(null)
 
     const dragStartHandler = (e, card) => {
-        setCurrentCard(card);
+
     }
 
     const dragEndHandler = (e) => {
@@ -27,15 +26,7 @@ const Trello = () => {
 
     const dropHandler = (e, card) => {
         e.preventDefault()
-        dispatch({
-            type: "dropCard",
-            payload: {
-                id: card.id,
-                order: card.order,
-                dropId: currentCard.id,
-                dropOrder: currentCard.order
-            }
-        })
+
     }
 
 

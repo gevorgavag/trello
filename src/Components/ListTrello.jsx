@@ -5,35 +5,23 @@ import {sort} from "../data/helpers";
 
 
 const ListTrello = ({card}) => {
-    const [currentCardItem, setCurrentCardItem] = useState(null);
 
     const dispatch = useDispatch();
 
 
-    function dragStartHandler(e, cardItem) {
-        setCurrentCardItem(cardItem);
-    }
-
-    function dragEndHandler(e) {
+    const dragStartHandler = (e, card, cardItem) => {
 
     }
 
-    function dragOverHandler(e) {
+    const dragEndHandler = (e, cardItem) => {
+    }
+
+    const dragOverHandler = (e) => {
         e.preventDefault()
     }
 
-    function dropHandel(e, cardItem) {
+    const dropHandel = (e, card , cardItem) => {
         e.preventDefault();
-        dispatch({
-            type: "dropCardItem",
-            payload: {
-                cardId: card.id,
-                id: cardItem.id,
-                dropId: currentCardItem.id,
-                order: cardItem.order,
-                dropOrder: currentCardItem.order,
-            }
-        })
     }
 
 
@@ -47,11 +35,11 @@ const ListTrello = ({card}) => {
                     return (
                         <div
                             key={cardItem.id}
-                            onDragStart={(e) => dragStartHandler(e, cardItem)}
-                            onDragLeave={(e) => dragEndHandler(e)}
+                            onDragStart={(e) => dragStartHandler(e, card, cardItem)}
+                            onDragLeave={(e) => dragEndHandler(e, cardItem)}
                             onDragEnd={(e) => dragEndHandler(e)}
                             onDragOver={(e) => dragOverHandler(e)}
-                            onDrop={(e) => dropHandel(e, cardItem)}
+                            onDrop={(e) => dropHandel(e, card, cardItem)}
                             draggable={true}
                         >
                             <ListItemTrello key={cardItem.id} card={card} cardItem={cardItem}/>

@@ -1,9 +1,8 @@
 
-
 export const todosReducer = (state=[], action) => {
 
     if(action.type === "push") {
-        return state.map(item => {
+        const data = state.map(item => {
             if(action.payload.id === item.id) {
                 return {
                     ...item,
@@ -17,11 +16,15 @@ export const todosReducer = (state=[], action) => {
                     ]
                 }
             }
-            return item
 
+            return item
         })
+
+        localStorage.setItem("data", JSON.stringify(data))
+
+        return data
     } else if(action.type === "addList") {
-        return [
+        const data = [
             ...state,
             {
                 id: Math.random(),
@@ -30,8 +33,12 @@ export const todosReducer = (state=[], action) => {
                 input: []
             }
         ]
+
+        localStorage.setItem("data", JSON.stringify(data));
+
+        return data;
     } else if(action.type === "editCardItem") {
-        return state.map(card => {
+        const data = state.map(card => {
             if(card.id === action.payload.cardId) {
                 return {
                     ...card,
@@ -50,10 +57,15 @@ export const todosReducer = (state=[], action) => {
 
             return card
         })
+        localStorage.setItem("data", JSON.stringify(data))
+        return data
+
     } else if(action.type === "deleteCard") {
-        return state.filter(card => card.id !== action.payload.cardId);
+        const data = state.filter(card => card.id !== action.payload.cardId);
+        localStorage.setItem("data", JSON.stringify(data))
+        return data
     } else if(action.type === "renameCardName") {
-        return state.map(card => {
+        const data = state.map(card => {
             if(card.id === action.payload.id) {
                 return {
                     ...card,
@@ -62,8 +74,10 @@ export const todosReducer = (state=[], action) => {
             }
             return card
         })
+        localStorage.setItem("data", JSON.stringify(data))
+        return data
     } else if(action.type === "dropCardItem") {
-        return state.map(card => {
+        const data = state.map(card => {
             if(card.id === action.payload.cardId) {
                 return {
                     ...card,
@@ -87,40 +101,11 @@ export const todosReducer = (state=[], action) => {
 
             return card;
         })
-    } else if(action.type === "dropCard") {
-        return state.map(card => {
-            if(card.id === action.payload.id) {
-                return {
-                    ...card,
-                    order: action.payload.dropOrder
-                }
-            }
-
-            if(card.id === action.payload.dropId) {
-                return {
-                    ...card,
-                    order: action.payload.order
-                }
-            }
-
-            return card
-        })
+        localStorage.setItem("data", JSON.stringify(data))
+        return data;
     }
 
     return state
 }
 
-export const initialTodos =  [
-    {
-        id: Math.random(),
-        order: 0,
-        header: "trello",
-        input: [
-            {
-                id: Math.random(),
-                order: 0,
-                text: "proekt"
-            }
-        ]
-    }
-];
+export const initialTodos = localStorage.getItem("data") ? JSON.parse(localStorage.getItem("data")) : [];
