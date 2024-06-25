@@ -9,22 +9,6 @@ const ListTrello = ({card}) => {
     const dispatch = useDispatch();
 
 
-    const dragStartHandler = (e, card, cardItem) => {
-
-    }
-
-    const dragEndHandler = (e, cardItem) => {
-    }
-
-    const dragOverHandler = (e) => {
-        e.preventDefault()
-    }
-
-    const dropHandel = (e, card , cardItem) => {
-        e.preventDefault();
-    }
-
-
     return (
         <div
             className="flex flex-col gap-3 rounded-xl"
@@ -35,12 +19,6 @@ const ListTrello = ({card}) => {
                     return (
                         <div
                             key={cardItem.id}
-                            onDragStart={(e) => dragStartHandler(e, card, cardItem)}
-                            onDragLeave={(e) => dragEndHandler(e, cardItem)}
-                            onDragEnd={(e) => dragEndHandler(e)}
-                            onDragOver={(e) => dragOverHandler(e)}
-                            onDrop={(e) => dropHandel(e, card, cardItem)}
-                            draggable={true}
                         >
                             <ListItemTrello key={cardItem.id} card={card} cardItem={cardItem}/>
                         </div>
